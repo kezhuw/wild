@@ -1,0 +1,18 @@
+solution "wild"
+    configurations {"Debug", "Release"}
+    location "build"
+    flags {"ExtraWarnings", "FatalWarnings", "Symbols"}
+    buildoptions {
+        '-std=c++11',
+        '-Wshadow',
+        '-Wconversion',
+        '-Wold-style-cast',
+    }
+
+project "wild"
+    kind "SharedLib"
+    language "C++"
+    location "build"
+    files {
+        "module.cpp",
+    }
