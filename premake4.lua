@@ -18,4 +18,5 @@ project "wild"
         "exception.cpp",
         "misc.cpp",
         "module.cpp",
+        "string.cpp",
     }
