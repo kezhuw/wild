@@ -4,8 +4,6 @@
 #include "exception.hpp"
 #include "unique_name.hpp"
 
-#include <assert.h>
-
 #include <functional>
 #include <utility>
 
