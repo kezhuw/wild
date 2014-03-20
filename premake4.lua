@@ -14,5 +14,6 @@ project "wild"
     language "C++"
     location "build"
     files {
+        "misc.cpp",
         "module.cpp",
     }
