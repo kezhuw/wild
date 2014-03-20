@@ -14,6 +14,7 @@ project "wild"
     language "C++"
     location "build"
     files {
+        "adler32.cpp",
         "exception.cpp",
         "misc.cpp",
         "module.cpp",
