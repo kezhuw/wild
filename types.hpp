@@ -1,7 +1,10 @@
 #ifndef __WILD_TYPES_HPP_
 #define __WILD_TYPES_HPP_
 
+#include <cstddef>
 #include <cstdint>
+
+#include <string>
 
 namespace wild {
 
@@ -24,6 +27,11 @@ typedef unsigned int uint;
 
 typedef uint8 byte;
 
+typedef intptr intreg;
+typedef uintptr uintreg;
+
+using std::size_t;
+using std::string;
 
 }
 
