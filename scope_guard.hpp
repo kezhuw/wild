@@ -14,8 +14,8 @@ namespace wild {
 class ScopeGuard {
 public:
 
-    explicit ScopeGuard(std::function<void()> onExit)
-        : _onExitScope(std::move(onExit)), _dismissed(false) {
+    explicit ScopeGuard(std::function<void()> onExitScope)
+        : _onExitScope(std::move(onExitScope)), _dismissed(false) {
         if (!_onExitScope) {
             throw Exception("ScopeGuard: scope exit function is nil");
         }
@@ -67,8 +67,8 @@ namespace detail {
 enum class ScopeGuardOnExit {};
 
 ScopeGuard
-operator+(ScopeGuardOnExit, std::function<void()> onExit) {
-    return ScopeGuard(std::move(onExit));
+operator+(ScopeGuardOnExit, std::function<void()> onExitScope) {
+    return ScopeGuard(std::move(onExitScope));
 }
 
 }
