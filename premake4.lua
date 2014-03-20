@@ -20,3 +20,6 @@ project "wild"
         "module.cpp",
         "string.cpp",
     }
+    links {
+        "execinfo",
+    }
