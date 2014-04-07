@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unistd.h>
+extern "C" int close(int fd);
 
 namespace wild {
 

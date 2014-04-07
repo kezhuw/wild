@@ -1,10 +1,10 @@
 #pragma once
 
 #include "types.hpp"
-#include "fd.hpp"
-#include "errno.hpp"
 
 #include <tuple>
+
+namespace wild { class Fd; }
 
 namespace wild {
 namespace io {

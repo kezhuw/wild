@@ -1,5 +1,6 @@
 #include "io.hpp"
 
+#include "fd.hpp"
 #include "errno.hpp"
 
 #include <unistd.h>
