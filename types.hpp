@@ -30,6 +30,7 @@ typedef uint8 byte;
 typedef intptr intreg;
 typedef uintptr uintreg;
 
+using byte_t = uint8;
 using std::size_t;
 using std::string;
 
