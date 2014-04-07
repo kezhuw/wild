@@ -30,6 +30,8 @@ typedef uint8 byte;
 typedef intptr intreg;
 typedef uintptr uintreg;
 
+using pointer_t = struct _ {int _;} *;
+using func_t = void (*)(pointer_t);
 using byte_t = uint8;
 using std::size_t;
 using std::string;
