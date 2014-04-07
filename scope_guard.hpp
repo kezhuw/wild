@@ -1,6 +1,11 @@
 #ifndef __WILD_SCOPE_GUARD_HPP_
 #define __WILD_SCOPE_GUARD_HPP_
 
+// For motivation and implementation, see:
+//
+// http://www.slideshare.net/adankevich/raii-and-scopeguard
+// https://github.com/facebook/folly/blob/master/folly/ScopeGuard.h
+
 #include "exception.hpp"
 #include "unique_name.hpp"
 
