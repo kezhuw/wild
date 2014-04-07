@@ -16,6 +16,18 @@ public:
     Definition(int seq, const char *name, InitFunction init, int order = 0);
 
     const char *Name() const;
+
+private:
+
+    // non-copyable
+    Definition(const Definition&) = delete;
+    Definition& operator=(const Definition&) = delete;
+
+    // non-movable
+    Definition(Definition&&) = delete;
+    Definition& operator=(Definition&&) = delete;
+
+    void* operator new(size_t) = delete;
 };
 
 void Init();
