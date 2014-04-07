@@ -19,6 +19,7 @@ project "wild"
         "misc.cpp",
         "module.cpp",
         "string.cpp",
+        "io.cpp",
     }
     links {
         "execinfo",
