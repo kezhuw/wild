@@ -1,5 +1,7 @@
 #pragma once
 
+#include "likely.hpp"
+
 #include <unordered_set>
 
 namespace wild {
@@ -14,7 +16,6 @@ public:
 
     IdAllocator()
         : _seq(Zero) {
-        _used.insert(Zero);
     }
 
     ~IdAllocator() = default;
@@ -22,6 +23,9 @@ public:
     Type NewId() {
         for (;;) {
             auto val = ++_seq;
+            if (UNLIKELY(val == Zero)) {
+                continue;
+            }
             bool inserted;
             std::tie(std::ignore, inserted) = _used.insert(val);
             if (inserted) {
@@ -32,10 +36,15 @@ public:
     }
 
     bool Release(Type id) {
-        if (id != Zero) {
-            return _used.erase(id) == 1;
-        }
-        return false;
+        return _used.erase(id) == 1;
+    }
+
+    size_t Size() const {
+        return _used.size();
+    }
+
+    bool Exist(Type id) {
+        return _used.count(id) == 1;
     }
 
 private:
