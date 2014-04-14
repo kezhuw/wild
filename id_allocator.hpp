@@ -35,10 +35,6 @@ public:
         return Zero;
     }
 
-    bool Release(Type id) {
-        return _used.erase(id) == 1;
-    }
-
     size_t Size() const {
         return _used.size();
     }
@@ -47,7 +43,17 @@ public:
         return _used.count(id) == 1;
     }
 
+    bool Erase(Type id) {
+        return _used.erase(id) == 1;
+    }
+
 private:
+
+    IdAllocator(const IdAllocator&) = delete;
+    IdAllocator& operator=(const IdAllocator&) = delete;
+
+    IdAllocator(IdAllocator&&) = delete;
+    IdAllocator& operator=(IdAllocator&&) = delete;
 
     std::unordered_set<Type> _used;
     Type _seq;
