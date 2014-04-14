@@ -9,7 +9,7 @@ namespace wild {
 string
 StackTrace(uintreg level) {
     void *stacks[128];
-    int n = ::backtrace(stacks, int(nelem(stacks)));
+    int n = ::backtrace(stacks, static_cast<int>(nelem(stacks)));
     char **symbols = ::backtrace_symbols(stacks, n);
     if (symbols == NULL) {
         return "(nil stack)\n";

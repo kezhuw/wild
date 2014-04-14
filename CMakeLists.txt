@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 2.6)
+project(wild)
+
+set(wild_SRCS
+adler32.cpp
+exception.cpp
+misc.cpp
+module.cpp
+string.cpp
+io.cpp
+)
+
+set(wild_INCS
+fd.hpp
+io.hpp
+id_allocator.hpp
+types.hpp
+errno.hpp
+adler32.hpp
+exception.hpp
+likely.hpp
+misc.hpp
+module.hpp
+module_init_failed.hpp
+scope_guard.hpp
+string.hpp
+unique_name.hpp
+)
+
+set(CXX_FLAGS
+-std=c++11
+-g
+-Wall
+-Wextra
+-Werror
+-Wconversion
+-Wshadow
+-Wwrite-strings
+)
+
+message("${wild_SRCS}")
+
+string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
+
+add_library(wild SHARED ${wild_SRCS})
+
+install(TARGETS wild DESTINATION lib)
+install(FILES ${wild_INCS} DESTINATION include/wild)
