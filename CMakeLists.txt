@@ -26,6 +26,7 @@ scope_guard.hpp
 string.hpp
 unique_name.hpp
 spinlock.hpp
+with_lock.hpp
 )
 
 set(CXX_FLAGS
