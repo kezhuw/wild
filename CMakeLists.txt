@@ -40,8 +40,6 @@ set(CXX_FLAGS
 -Wwrite-strings
 )
 
-message("${wild_SRCS}")
-
 string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
 add_library(wild SHARED ${wild_SRCS})
