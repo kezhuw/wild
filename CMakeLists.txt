@@ -25,6 +25,7 @@ module_init_failed.hpp
 scope_guard.hpp
 string.hpp
 unique_name.hpp
+spinlock.hpp
 )
 
 set(CXX_FLAGS
