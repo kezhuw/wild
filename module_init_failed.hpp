@@ -9,8 +9,8 @@ namespace wild { namespace module {
 class InitFailed : std::exception {
 public:
 
-    InitFailed(int code, std::string message)
-        : _code(code), _message(message) {}
+    InitFailed(int code_, std::string message)
+        : _code(code_), _message(message) {}
 
     int code() {
         return _code;
