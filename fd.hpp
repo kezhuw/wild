@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 extern "C" int close(int fd);
 
 namespace wild {
@@ -56,10 +58,24 @@ public:
         return Valid();
     }
 
+    void swap(Fd& other) noexcept {
+        using std::swap;
+        swap(_fd, other._fd);
+    }
+
 private:
     int _fd;
 };
 
 static_assert(sizeof(Fd) == sizeof(int), "sizeof(Fd) ~= sizeof(int))");
+
+}
+
+namespace std {
+
+template<>
+inline void swap(wild::Fd& a, wild::Fd& b) {
+    a.swap(b);
+}
 
 }
