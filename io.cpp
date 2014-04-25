@@ -19,17 +19,17 @@ try_again:
             if (e == EINTR) {
                 goto try_again;
             }
-            return {size, e};
+            return std::make_tuple(size, e);
         }
         if (r == 0) {
-            return {size, EEOF};
+            return std::make_tuple(size, EEOF);
         }
         size_t n = static_cast<size_t>(r);
         size += n;
         buf += n;
         len -= n;
     } while (len != 0);
-    return {size, 0};
+    return std::make_tuple(size, 0);
 }
 
 // If fd is not valid, read(2) will raise EBADF.
@@ -50,14 +50,14 @@ try_again:
             if (e == EINTR) {
                 goto try_again;
             }
-            return {len, e};
+            return std::make_tuple(len, e);
         }
         size_t n = static_cast<size_t>(r);
         len += n;
         data += n;
         size -= n;
     } while (size != 0);
-    return {len , 0};
+    return std::make_tuple(len, 0);
 }
 
 std::tuple<size_t, int>
