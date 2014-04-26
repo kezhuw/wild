@@ -27,6 +27,7 @@ string.hpp
 unique_name.hpp
 spinlock.hpp
 with_lock.hpp
+forward_list.hpp
 )
 
 set(CXX_FLAGS
