@@ -6,7 +6,7 @@ namespace wild {
 namespace os {
 
 // Thread-safe strerror(3).
-const char *strerror(int errno);
+const char *strerror(int errnum);
 
 }
 
