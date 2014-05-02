@@ -69,7 +69,7 @@ namespace detail {
 
 enum class ScopeGuardOnExit {};
 
-ScopeGuard
+inline ScopeGuard
 operator+(ScopeGuardOnExit, std::function<void()> onExitScope) {
     return ScopeGuard(std::move(onExitScope));
 }
