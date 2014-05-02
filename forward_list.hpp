@@ -8,8 +8,18 @@ public:
     ForwardList()
         : _tail(&_dummy) {} 
 
+    ForwardList(ForwardList&& other)
+        : _dummy(other._dummy.Next()), _tail(other._tail) {
+        other.reset();
+    }
+
+    ForwardList(const ForwardList&) = delete;
+    ForwardList& operator=(const ForwardList&) = delete;
+
+    ForwardList& operator=(ForwardList&& other) = delete;
+
     struct Node {
-        Node() : _next(nullptr) {}
+        explicit Node(Node *next = nullptr) : _next(next) {}
 
         struct Node *Next() { return _next; }
         void SetNext(Node *next) { _next = next; }
