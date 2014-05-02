@@ -28,6 +28,7 @@ unique_name.hpp
 spinlock.hpp
 with_lock.hpp
 forward_list.hpp
+freelist.hpp
 )
 
 set(CXX_FLAGS
