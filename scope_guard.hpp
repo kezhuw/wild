@@ -78,8 +78,8 @@ operator+(ScopeGuardOnExit, std::function<void()> onExitScope) {
 
 }   // wild
 
-#define SCOPE_EXIT                                          \
-    wild::ScopeGuard&& UNIQUE_NAME(scope_exit)              \
+#define SCOPE_EXIT                                                      \
+    wild::ScopeGuard&& __attribute__((unused)) UNIQUE_NAME(scope_exit)  \
     = ::wild::detail::ScopeGuardOnExit() + [&] () noexcept
 
 #endif
