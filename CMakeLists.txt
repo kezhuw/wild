@@ -32,7 +32,8 @@ freelist.hpp
 )
 
 set(CXX_FLAGS
--std=c++11
+-std=c++1y
+-stdlib=libc++
 -g
 -Wall
 -Wextra
