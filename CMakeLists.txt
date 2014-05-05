@@ -40,7 +40,6 @@ set(CXX_FLAGS
 -Werror
 -Wconversion
 -Wshadow
--Wwrite-strings
 )
 
 string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
