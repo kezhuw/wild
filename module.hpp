@@ -2,10 +2,11 @@
 #define __WILD_MODULE_HPP_
 
 #include <functional>
+#include <system_error>
 
 namespace wild { namespace module {
 
-typedef std::function<int()> InitFunction;
+typedef std::function<void()> InitFunction;
 
 class Definition {
 public:

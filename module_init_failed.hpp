@@ -9,19 +9,14 @@ namespace wild { namespace module {
 class InitFailed : std::exception {
 public:
 
-    InitFailed(int code_, std::string message)
-        : _code(code_), _message(message) {}
-
-    int code() {
-        return _code;
-    }
+    InitFailed(std::string message)
+        : _message(message) {}
 
     virtual const char *what() const noexcept override final {
         return _message.c_str();
     }
 
 private:
-    int _code;
     std::string _message;
 };
 

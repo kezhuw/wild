@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include <stdio.h>
+#include <cstdio>
 
 struct module_info {
     const char *name;
@@ -56,13 +56,14 @@ Init() {
         for (OrderedModuleMap::value_type const& ordered_value : ordered_modules) {
             ModuleVec const& modules = ordered_value.second;
             for (struct module_info *m : modules) {
-                int err = m->init();
-                if (err != 0) {
+                try {
+                    m->init();
+                } catch (...) {
                     char buf[1024];
                     snprintf(buf, sizeof buf,
-                            "failed to init module[%s seq(%d) order(%d)]",
+                            "fail to init module[%s seq(%d) order(%d)]",
                             m->name, seq_value.first, ordered_value.first);
-                    throw InitFailed(err, buf);
+                    std::throw_with_nested(InitFailed(buf));
                 }
             }
         }
