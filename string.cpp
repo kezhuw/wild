@@ -2,7 +2,7 @@
 
 #include "errno.hpp"
 
-#include <string.h>
+#include <cstring>
 
 namespace {
 
@@ -21,8 +21,15 @@ strerror(int errnum) {
     if (errnum == EEOF) {
         return gEEOFString;
     }
+
+#if defined(__APPLE__) || defined(__FreeBSD__) || ((_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600) && !_GNU_SOURCE)
+    /* XSI-compliant */
     ::strerror_r(errnum, tErrnoString, sizeof(tErrnoString));
     return tErrnoString;
+#else
+    /* GNU-specific */
+    return ::strerror_r(errnum, tErrnoString, sizeof(tErrnoString));
+#endif
 }
 
 }
