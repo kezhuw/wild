@@ -2,7 +2,6 @@
 #define __WILD_MODULE_HPP_
 
 #include <functional>
-#include <system_error>
 
 namespace wild { namespace module {
 
