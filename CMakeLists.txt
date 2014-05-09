@@ -29,6 +29,7 @@ spinlock.hpp
 with_lock.hpp
 forward_list.hpp
 freelist.hpp
+any.hpp
 )
 
 set(CXX_FLAGS
