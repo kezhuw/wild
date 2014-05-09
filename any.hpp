@@ -5,9 +5,6 @@
 #include <exception>
 #include <type_traits>
 #include <utility>
-#include <cassert>
-#include <cstdio>
-#include <cstdlib>
 
 namespace wild {
 
@@ -146,7 +143,7 @@ private:
         }
 
     private:
-        std::atomic<int64> _refcnt;
+        std::atomic<intptr> _refcnt;
     };
 
     template<typename ValueType>
