@@ -27,26 +27,19 @@ public:
         std::swap(_content, other._content);
     }
 
+    // http://en.cppreference.com/w/cpp/language/as_operator
+    // http://en.cppreference.com/w/cpp/language/copy_constructor
+    //
+    // class's copy constructor and copy assignment operator is implicitly
+    // deleted by user-declared move constructor or move assignment operator.
     Any& operator=(const Any& other) noexcept {
         Any(other).swap(*this);
         return *this;
     }
 
-    Any& operator=(Any&& other) noexcept {
-        Any().swap(*this);
-        other.swap(*this);
-        return *this;
-    }
-
-    template<typename ValueType>
-    Any& operator=(const ValueType& value) {
-        Any(value).swap(*this);
-        return *this;
-    }
-
-    template<typename Type>
-    Any& operator=(Type&& value) {
-        Any(std::forward<Type>(value)).swap(*this);
+    template<typename T>
+    Any& operator=(T&& value) {
+        Any(std::forward<T>(value)).swap(*this);
         return *this;
     }
 
