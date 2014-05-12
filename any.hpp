@@ -18,9 +18,9 @@ public:
 
     Any(Any&& other) noexcept : _content(other._content) { other._content = nullptr; }
 
-    template<typename T>
-    Any(T&& value, std::enable_if_t<!std::is_same<T, Any&>::value>* = nullptr)
     // non-const lvalue of type Any may be captured by universal reference as 'Any&', disable it.
+    template<typename T, std::enable_if_t<!std::is_same<T, Any&>::value>* = nullptr>
+    Any(T&& value)
         : _content(new holder<std::remove_cv_t<std::remove_reference_t<T>>>(std::forward<T>(value))) {}
 
     void swap(Any& other) noexcept {
