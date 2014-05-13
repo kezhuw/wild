@@ -25,8 +25,6 @@ typedef std::uintptr_t uintptr;
 
 typedef unsigned int uint;
 
-typedef uint8 byte;
-
 typedef intptr intreg;
 typedef uintptr uintreg;
 

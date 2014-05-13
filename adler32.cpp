@@ -4,7 +4,7 @@ namespace wild {
 namespace adler32 {
 
 uint32
-Calculate(byte const* bytes, size_t len, uint32 startingChecksum) {
+Calculate(byte_t const* bytes, size_t len, uint32 startingChecksum) {
     static const uint32 mod = 65521;
     static const uint32 max = 5552;
 

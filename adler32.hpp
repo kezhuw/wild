@@ -6,18 +6,18 @@
 namespace wild {
 namespace adler32 {
 
-uint32 Calculate(byte const* bytes, size_t len, uint32 startingChecksum = 1);
+uint32 Calculate(byte_t const* bytes, size_t len, uint32 startingChecksum = 1);
 
 class Checksum {
 public:
     explicit Checksum(uint32 value = 1) : _value(value) {}
 
-    Checksum(byte const* bytes, size_t len)
+    Checksum(byte_t const* bytes, size_t len)
         : Checksum() {
         Update(bytes, len);
     }
 
-    void Update(byte const* bytes, size_t len) {
+    void Update(byte_t const* bytes, size_t len) {
         _value = Calculate(bytes, len, _value);
     }
 
