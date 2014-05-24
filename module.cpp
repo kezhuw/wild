@@ -23,25 +23,32 @@ _mapped_modules() {
     return mapped_modules;
 }
 
-typedef std::vector<struct module_info *> ModuleVec;
-typedef std::map<int, ModuleVec> OrderedModuleMap;
-typedef std::map<int, OrderedModuleMap> SeqModuleMap;
+struct Priority {
+    int Seq;
+    int Order;
+};
 
-SeqModuleMap&
+inline bool operator<(Priority a, Priority b) {
+    return (a.Seq < b.Seq) || (a.Seq == b.Seq && a.Order < b.Order);
+}
+
+typedef std::multimap<Priority, struct module_info*> PriorityMap;
+
+PriorityMap&
 _sorted_modules() {
-    static SeqModuleMap sorted_modules;
+    static PriorityMap sorted_modules;
     return sorted_modules;
 }
 
 void
-_add_module(const wild::module::Definition *id, int seq, int order, struct module_info *module) {
-    _sorted_modules()[seq][order].push_back(module);
-    _mapped_modules()[id] = module;
+_add_module(const wild::module::Definition *def, int seq, int order, struct module_info *module) {
+    _sorted_modules().emplace(Priority{seq, order}, module);
+    _mapped_modules()[def] = module;
 }
 
 struct module_info *
-_get_module(const wild::module::Definition *id) {
-    return _mapped_modules()[id];
+_get_module(const wild::module::Definition *def) {
+    return _mapped_modules()[def];
 }
 
 }
@@ -50,22 +57,18 @@ namespace wild { namespace module {
 
 void
 Init() {
-    SeqModuleMap const& seq_modules = _sorted_modules();
-    for (SeqModuleMap::value_type const& seq_value : seq_modules) {
-        OrderedModuleMap const& ordered_modules = seq_value.second;
-        for (OrderedModuleMap::value_type const& ordered_value : ordered_modules) {
-            ModuleVec const& modules = ordered_value.second;
-            for (struct module_info *m : modules) {
-                try {
-                    m->init();
-                } catch (...) {
-                    char buf[1024];
-                    snprintf(buf, sizeof buf,
-                            "fail to init module[%s seq(%d) order(%d)]",
-                            m->name, seq_value.first, ordered_value.first);
-                    std::throw_with_nested(InitFailed(buf));
-                }
-            }
+    PriorityMap const& modules = _sorted_modules();
+    for (auto const& value : modules) {
+        struct module_info *m = value.second;
+        try {
+            m->init();
+        } catch (...) {
+            Priority p = value.first;
+            char buf[1024];
+            snprintf(buf, sizeof buf,
+                "fail to init module[%s seq(%d) order(%d)]",
+                m->name, p.Seq, p.Order);
+            std::throw_with_nested(InitFailed(buf));
         }
     }
 }
