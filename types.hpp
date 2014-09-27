@@ -8,6 +8,8 @@
 
 namespace wild {
 
+namespace types {
+
 typedef std::int8_t int8;
 typedef std::uint8_t uint8;
 
@@ -33,6 +35,10 @@ using func_t = void (*)(pointer_t);
 using byte_t = uint8;
 using std::size_t;
 using std::string;
+
+}
+
+using namespace types;
 
 }
 
