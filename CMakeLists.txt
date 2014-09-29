@@ -45,7 +45,10 @@ set(CXX_FLAGS
 
 string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
-add_library(wild SHARED ${wild_SRCS})
+add_library(wild_shared SHARED ${wild_SRCS})
+add_library(wild_static STATIC ${wild_SRCS})
+set_target_properties(wild_shared PROPERTIES OUTPUT_NAME wild)
+set_target_properties(wild_static PROPERTIES OUTPUT_NAME wild)
 
-install(TARGETS wild DESTINATION lib)
+install(TARGETS wild_shared wild_static DESTINATION lib)
 install(FILES ${wild_INCS} DESTINATION include/wild)
