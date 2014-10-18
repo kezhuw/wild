@@ -2,6 +2,8 @@
 
 #include "types.hpp"
 
+#include <atomic>
+#include <typeinfo>
 #include <exception>
 #include <type_traits>
 #include <utility>
