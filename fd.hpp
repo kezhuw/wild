@@ -33,7 +33,7 @@ public:
         return *this;
     }
 
-    int Relase() {
+    int Release() {
         int fd = _fd;
         _fd = -1;
         return fd;
