@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(wild)
+project(wild CXX)
 
 set(wild_SRCS
 adler32.cpp
