@@ -45,6 +45,8 @@ set(CXX_FLAGS
 
 string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
+cmake_policy(SET CMP0042 NEW)
+
 add_library(wild_shared SHARED ${wild_SRCS})
 add_library(wild_static STATIC ${wild_SRCS})
 set_target_properties(wild_shared PROPERTIES OUTPUT_NAME wild)
