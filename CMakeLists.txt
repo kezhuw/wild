@@ -57,6 +57,11 @@ add_library(wild_static STATIC ${wild_SRCS})
 set_target_properties(wild_shared PROPERTIES OUTPUT_NAME wild)
 set_target_properties(wild_static PROPERTIES OUTPUT_NAME wild)
 
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "FreeBSD")
+    target_link_libraries(wild_shared execinfo)
+    target_link_libraries(wild_static execinfo)
+endif()
+
 set(INCLUDE_INSTALL_DIR include)
 set(LIBRARY_INSTALL_DIR lib)
 set(PACKAGE_INSTALL_DIR lib/wild)
