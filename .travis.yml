@@ -4,6 +4,6 @@ before_install:
     - cmake --version
     - sudo apt-get update -qq
     - sudo apt-get install -qq libc++-dev
-    - sudo apt-get upgrade cmake
+    - sudo apt-get install -qq cmake
     - cmake --version
 script: mkdir build && cd build/ && cmake ../ && make
