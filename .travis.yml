@@ -1,6 +1,9 @@
 language: cpp
 compiler: clang
 before_install:
+    - cmake --version
     - sudo apt-get update -qq
     - sudo apt-get install -qq libc++-dev
+    - sudo apt-get upgrade cmake
+    - cmake --version
 script: mkdir build && cd build/ && cmake ../ && make
