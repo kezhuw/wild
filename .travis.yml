@@ -1,0 +1,4 @@
+language: cpp
+compiler: clang
+before_install: sudo apt-get install -qq libc++-dev
+script: mkdir build && cd build/ && cmake ../ && make
