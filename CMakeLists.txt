@@ -64,7 +64,6 @@ endif()
 
 set(INCLUDE_INSTALL_DIR include)
 set(LIBRARY_INSTALL_DIR lib)
-set(PACKAGE_INSTALL_DIR lib/wild)
 
 install(TARGETS wild_shared wild_static EXPORT wild-targets DESTINATION ${LIBRARY_INSTALL_DIR})
 install(FILES ${wild_INCS} DESTINATION ${INCLUDE_INSTALL_DIR}/wild)
@@ -73,6 +72,7 @@ install(FILES ${wild_INCS} DESTINATION ${INCLUDE_INSTALL_DIR}/wild)
 #
 # # create package config {
 # 
+# set(PACKAGE_INSTALL_DIR lib/wild)
 # export(EXPORT wild-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/wild-targets.cmake)
 # install(EXPORT wild-targets DESTINATION ${PACKAGE_INSTALL_DIR})
 # 
