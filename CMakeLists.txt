@@ -42,7 +42,11 @@ set(CXX_FLAGS
 -Wshadow
 )
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_SYSTEM_NAME}" MATCHES "FreeBSD|Darwin" OR HAS_LIBCXX11)
+    set(HAS_LIBC++ true)
+endif()
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND HAS_LIBC++ )
     list(INSERT CXX_FLAGS 1 -stdlib=libc++)
 endif()
 
