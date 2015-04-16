@@ -42,11 +42,7 @@ set(CXX_FLAGS
 -Wshadow
 )
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES "FreeBSD|Darwin" OR HAS_LIBCXX11)
-    set(HAS_LIBC++ true)
-endif()
-
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND HAS_LIBC++ )
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     list(INSERT CXX_FLAGS 1 -stdlib=libc++)
 endif()
 
@@ -55,9 +51,6 @@ string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 if(POLICY CMP0042)
     cmake_policy(SET CMP0042 NEW)
 endif()
-
-message("compiler id: ${CMAKE_CXX_COMPILER_ID}")
-message("cxx flags: ${CMAKE_CXX_FLAGS}")
 
 add_library(wild_shared SHARED ${wild_SRCS})
 add_library(wild_static STATIC ${wild_SRCS})
