@@ -42,7 +42,7 @@ set(CXX_FLAGS
 -Wshadow
 )
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     list(INSERT CXX_FLAGS 1 -stdlib=libc++)
 endif()
 
@@ -57,7 +57,7 @@ add_library(wild_static STATIC ${wild_SRCS})
 set_target_properties(wild_shared PROPERTIES OUTPUT_NAME wild)
 set_target_properties(wild_static PROPERTIES OUTPUT_NAME wild)
 
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "FreeBSD")
+if(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
     target_link_libraries(wild_shared execinfo)
     target_link_libraries(wild_static execinfo)
 endif()
