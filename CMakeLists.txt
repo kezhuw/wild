@@ -35,6 +35,7 @@ utility.hpp
 
 set(CXX_FLAGS
 -std=c++1y
+-stdlib=libstdc++
 -g
 -Wall
 -Wextra
@@ -42,10 +43,6 @@ set(CXX_FLAGS
 -Wconversion
 -Wshadow
 )
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    list(INSERT CXX_FLAGS 1 -stdlib=libc++)
-endif()
 
 string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
