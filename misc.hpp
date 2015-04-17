@@ -1,5 +1,4 @@
-#ifndef __WILD_MISC_HPP_
-#define __WILD_MISC_HPP_
+#pragma once
 
 #include "types.hpp"
 
@@ -18,5 +17,3 @@ nelem(Type (&arr_)[N]) {
 string StackTrace(uintreg level = 1);
 
 }
-
-#endif

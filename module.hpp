@@ -1,5 +1,4 @@
-#ifndef __WILD_MODULE_HPP_
-#define __WILD_MODULE_HPP_
+#pragma once
 
 #include <functional>
 
@@ -33,5 +32,3 @@ private:
 void Init();
 
 }}
-
-#endif

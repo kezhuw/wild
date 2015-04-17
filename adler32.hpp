@@ -1,5 +1,4 @@
-#ifndef __WILD_ADLER32_HPP_
-#define __WILD_ADLER32_HPP_
+#pragma once
 
 #include "types.hpp"
 
@@ -30,5 +29,3 @@ private:
 
 }
 }
-
-#endif

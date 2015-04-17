@@ -1,5 +1,4 @@
-#ifndef __WILD_EXCEPTION_HPP_
-#define __WILD_EXCEPTION_HPP_
+#pragma once
 
 #include <exception>
 #include <string>
@@ -53,5 +52,3 @@ private:
 };
 
 }
-
-#endif

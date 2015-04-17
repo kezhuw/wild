@@ -1,5 +1,4 @@
-#ifndef __WILD_SCOPE_GUARD_HPP_
-#define __WILD_SCOPE_GUARD_HPP_
+#pragma once
 
 // For motivation and implementation, see:
 //
@@ -81,5 +80,3 @@ operator+(ScopeGuardOnExit, std::function<void()> onExitScope) {
 #define SCOPE_EXIT                                                      \
     wild::ScopeGuard&& __attribute__((unused)) UNIQUE_NAME(scope_exit)  \
     = ::wild::detail::ScopeGuardOnExit() + [&] () noexcept
-
-#endif

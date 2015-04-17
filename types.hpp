@@ -1,5 +1,4 @@
-#ifndef __WILD_TYPES_HPP_
-#define __WILD_TYPES_HPP_
+#pragma once
 
 #include <cstddef>
 #include <cstdint>
@@ -39,5 +38,3 @@ using std::string;
 using namespace types;
 
 }
-
-#endif

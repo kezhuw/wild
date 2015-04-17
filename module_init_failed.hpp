@@ -1,5 +1,4 @@
-#ifndef __WILD_MODULE_INIT_FAILED_HPP_
-#define __WILD_MODULE_INIT_FAILED_HPP_
+#pragma once
 
 #include <exception>
 #include <string>
@@ -21,5 +20,3 @@ private:
 };
 
 }}
-
-#endif

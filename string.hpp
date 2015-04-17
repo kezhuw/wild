@@ -1,5 +1,4 @@
-#ifndef __WILD_STRING_HPP_
-#define __WILD_STRING_HPP_
+#pragma once
 
 namespace wild {
 
@@ -11,5 +10,3 @@ const char *strerror(int errnum);
 }
 
 }
-
-#endif
