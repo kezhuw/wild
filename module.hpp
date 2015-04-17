@@ -2,7 +2,8 @@
 
 #include <functional>
 
-namespace wild { namespace module {
+namespace wild {
+namespace module {
 
 typedef std::function<void()> InitFunction;
 
@@ -31,4 +32,5 @@ private:
 
 void Init();
 
-}}
+}
+}

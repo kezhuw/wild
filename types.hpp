@@ -6,7 +6,6 @@
 #include <string>
 
 namespace wild {
-
 namespace types {
 
 using int8      = std::int8_t;

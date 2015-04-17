@@ -3,7 +3,6 @@
 #include <mutex>
 
 namespace wild {
-
 namespace detail {
 
 template<typename Locker>
@@ -15,7 +14,6 @@ struct with_lock_guard : std::lock_guard<Locker> {
 };
 
 }
-
 }
 
 #define WITH_LOCK(locker)       \
