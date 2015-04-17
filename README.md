@@ -15,7 +15,7 @@ As soon as `thread_local` support in libc++ complete, I will switch to it. Anywa
 
 In Debian jessie:
 ```shell
-apt-get install -y clang libc++-dev cmake
+apt-get install -y clang libstdc++-dev cmake
 ```
 
 ### Build
