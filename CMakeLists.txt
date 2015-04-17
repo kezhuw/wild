@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
 project(wild CXX)
 
 set(wild_SRCS
@@ -68,19 +68,17 @@ set(LIBRARY_INSTALL_DIR lib)
 install(TARGETS wild_shared wild_static EXPORT wild-targets DESTINATION ${LIBRARY_INSTALL_DIR})
 install(FILES ${wild_INCS} DESTINATION ${INCLUDE_INSTALL_DIR}/wild)
 
-# Travis CI only support cmake 2.8.7 now.
-#
-# # create package config {
-# 
-# set(PACKAGE_INSTALL_DIR lib/wild)
-# export(EXPORT wild-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/wild-targets.cmake)
-# install(EXPORT wild-targets DESTINATION ${PACKAGE_INSTALL_DIR})
-# 
-# include(CMakePackageConfigHelpers)
-# configure_package_config_file(wild-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/wild-config.cmake
-#     INSTALL_DESTINATION ${PACKAGE_INSTALL_DIR}
-#     PATH_VARS INCLUDE_INSTALL_DIR LIBRARY_INSTALL_DIR)
-# 
-# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/wild-config.cmake DESTINATION ${PACKAGE_INSTALL_DIR})
-# 
-# # }
+# create package config {
+
+set(PACKAGE_INSTALL_DIR lib/wild)
+export(EXPORT wild-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/wild-targets.cmake)
+install(EXPORT wild-targets DESTINATION ${PACKAGE_INSTALL_DIR})
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(wild-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/wild-config.cmake
+    INSTALL_DESTINATION ${PACKAGE_INSTALL_DIR}
+    PATH_VARS INCLUDE_INSTALL_DIR LIBRARY_INSTALL_DIR)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/wild-config.cmake DESTINATION ${PACKAGE_INSTALL_DIR})
+
+# }
