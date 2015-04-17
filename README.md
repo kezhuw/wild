@@ -6,8 +6,10 @@ Libwild is a C++ utility library written in C++ 14. Due to operating system, com
 
 *   `thread_local` in clang requires libstdc++ 4.8 or later.
 *   std::regex has no implementation in libstdc++ 4.8, libstdc++ 4.9 implements.
-*   Max OS X and FreeBSD only contain gcc 4.2 in their base system due to license issue.
-*   Clang has better standard support than gcc 4.9.
+*   Max OS X and FreeBSD contain gcc 4.2 in their base system due to license issue.
+*   Clang has better standard compliant than gcc 4.9.
+
+As soon as `thread_local` support in libc++ complete, I will switch to it. Anyway I prefer Clang.
 
 ### GNU/Linux
 
