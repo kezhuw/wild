@@ -11,6 +11,7 @@ io.cpp
 )
 
 set(wild_INCS
+BlockingQueue.hpp
 fd.hpp
 io.hpp
 id_allocator.hpp
