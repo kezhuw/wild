@@ -2,144 +2,82 @@
 
 #include "types.hpp"
 
-// FreeList
-// FreeListS    with Size();
-//
-// FreeListT    template version, for type safety;
-// FreeListST   template with Size().
+#include <type_traits>
+#include <utility>
 
 namespace wild {
 
+template<typename T>
 class FreeList {
 public:
+    static_assert(sizeof(T) >= sizeof(pointer_t), "FreeList's element size less than a pointer");
+    static_assert(std::is_same<T, std::remove_cv_t<std::remove_reference_t<T>>>::value, "can't be reference and cv-qualified type");
 
-    FreeList() : _first(nullptr) {}
+    FreeList() noexcept : _front(nullptr), _size(0) {}
 
-    FreeList(FreeList&& other)
-        : _first(other._first) {
-        other._first = nullptr;
+    FreeList(FreeList&& other) noexcept
+        : _front(other._front), _size(other._size) {
+        other.clear();
     }
 
-    void Free(pointer_t ptr) {
-        auto node = reinterpret_cast<Node*>(ptr);
-        node->_link = _first;
-        _first = node;
+    FreeList& operator=(FreeList&& other) noexcept {
+        _front = other._front;
+        _size = other._size;
+        other.clear();
     }
 
-    pointer_t Take() {
-        if (struct Node *node = _first) {
-            _first = node->_link;
-            return reinterpret_cast<pointer_t>(node);
-        }
-        return nullptr;
+    void swap(FreeList& other) noexcept {
+        std::swap(_front, other._front);
+        std::swap(_size, other._size);
     }
 
-    bool Empty() {
-        return _first == nullptr;
-    }
-
-    FreeList(const FreeList&) = delete;
-
-    FreeList& operator=(const FreeList&) = delete;
-    FreeList& operator=(FreeList&&) = delete;
-
-private:
-    struct Node {
-        struct Node *_link;
-    } *_first;
-};
-
-class FreeListS {
-public:
-
-    FreeListS() : _first(nullptr) {}
-
-    FreeListS(FreeListS&& other)
-        : _first(other._first), _size(other._size) {
-        other._first = nullptr;
-        other._size = 0;
-    }
-
-    void Free(pointer_t ptr) {
-        auto node = reinterpret_cast<Node*>(ptr);
-        node->_link = _first;
-        _first = node;
+    void push(T *elem) noexcept {
+        auto node = reinterpret_cast<Node*>(elem);
+        node->link = _front;
+        _front = node;
         ++_size;
     }
 
-    pointer_t Take() {
-        if (struct Node *node = _first) {
-            _first = node->_link;
+    T *take() noexcept {
+        if (struct Node *node = _front) {
+            _front = node->link;
             --_size;
-            return reinterpret_cast<pointer_t>(node);
+            return reinterpret_cast<T*>(node);
         }
         return nullptr;
     }
 
-    bool Empty() {
-        return _first == nullptr;
+    void clear() noexcept {
+        _front = nullptr;
+        _size = 0;
     }
 
-    size_t Size() {
+    bool empty() const noexcept {
+        return _front == nullptr;
+    }
+
+    size_t size() const noexcept {
         return _size;
     }
 
-    FreeListS(const FreeListS&) = delete;
-
-    FreeListS& operator=(const FreeListS&) = delete;
-    FreeListS& operator=(FreeListS&&) = delete;
-
 private:
+
+    FreeList(const FreeList&) = delete;
+    FreeList& operator=(const FreeList&) = delete;
+
     struct Node {
-        struct Node *_link;
-    } *_first;
+        struct Node *link;
+    } *_front;
     size_t _size;
 };
 
-template<typename T>
-class FreeListT {
-public:
-    static_assert(sizeof(T) >= sizeof(pointer_t), "FreeListT's element size less than a pointer");
+}
 
-    void Free(T *ptr) {
-        _freelist.Free(reinterpret_cast<pointer_t>(ptr));
-    }
-
-    T *Take() {
-        return reinterpret_cast<T*>(_freelist.Take());
-    }
-
-    bool Empty() {
-        return _freelist.Empty();
-    }
-
-private:
-    FreeList _freelist;
-};
+namespace std {
 
 template<typename T>
-class FreeListST {
-public:
-    static_assert(sizeof(T) >= sizeof(pointer_t), "FreeListST's element size less than a pointer");
-
-    void Free(T *ptr) {
-        _freelist.Free(reinterpret_cast<pointer_t>(ptr));
-    }
-
-    T *Take() {
-        return reinterpret_cast<T*>(_freelist.Take());
-    }
-
-    bool Empty() {
-        return _freelist.Empty();
-    }
-
-    size_t Size() {
-        return _freelist.Size();
-    }
-
-private:
-    FreeListS _freelist;
-};
+inline void swap(wild::FreeList<T>& a, wild::FreeList<T>& b) noexcept(noexcept(a.swap(b))) {
+    a.swap(b);
+}
 
 }
