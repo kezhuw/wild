@@ -40,4 +40,7 @@ private:
     string _stacktrace;
 };
 
+void print_exception(const std::exception& e);
+void print_exception(std::exception_ptr eptr);
+
 }
