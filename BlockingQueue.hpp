@@ -6,11 +6,10 @@
 
 #include <queue>
 #include <condition_variable>
-#include <mutex>
 
 namespace wild {
 
-template<typename ValueT, typename MutexT = std::mutex>
+template<typename ValueT, typename MutexT>
 class BlockingQueue {
 public:
 
