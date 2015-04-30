@@ -4,7 +4,7 @@
 #include "with_lock.hpp"
 #include "utility.hpp"
 
-#include <queue>
+#include <deque>
 #include <condition_variable>
 
 namespace wild {
@@ -21,7 +21,7 @@ public:
             while (_queue.empty()) {
                 _notEmpty.wait(_mutex);
             }
-            return wild::take(_queue);
+            return wild::take_front(_queue);
         }
     }
 
@@ -29,7 +29,7 @@ public:
         bool isEmpty;
         WITH_LOCK(_mutex) {
             isEmpty = _queue.empty();
-            _queue.push(value);
+            _queue.push_back(value);
         }
         if (isEmpty) {
             _notEmpty.notify_one();
@@ -40,7 +40,7 @@ public:
         bool isEmpty;
         WITH_LOCK(_mutex) {
             isEmpty = _queue.empty();
-            _queue.push(std::move(value));
+            _queue.push_back(std::move(value));
         }
         if (isEmpty) {
             _notEmpty.notify_one();
@@ -65,7 +65,7 @@ private:
 
     mutable MutexT _mutex;
     std::condition_variable_any _notEmpty;
-    std::queue<ValueT> _queue;
+    std::deque<ValueT> _queue;
 };
 
 }
