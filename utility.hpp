@@ -25,4 +25,13 @@ auto take_back(C& c) {
     return v;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+template<typename Type, size_t N>
+size_t
+nelem(Type (&arr_)[N]) {
+    return N;
+}
+#pragma GCC diagnostic pop
+
 }

@@ -4,10 +4,10 @@ project(wild CXX)
 set(wild_SRCS
 adler32.cpp
 exception.cpp
-misc.cpp
 module.cpp
 string.cpp
 io.cpp
+stacktrace.cpp
 )
 
 set(wild_INCS
@@ -20,7 +20,6 @@ errno.hpp
 adler32.hpp
 exception.hpp
 likely.hpp
-misc.hpp
 module.hpp
 module_init_failed.hpp
 ScopeGuard.hpp
@@ -32,6 +31,7 @@ ForwardList.hpp
 FreeList.hpp
 Any.hpp
 utility.hpp
+stacktrace.hpp
 )
 
 set(CXX_FLAGS

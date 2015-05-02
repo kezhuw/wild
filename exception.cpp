@@ -1,5 +1,5 @@
 #include "exception.hpp"
-#include "misc.hpp"
+#include "stacktrace.hpp"
 
 #include <utility>
 
@@ -8,7 +8,7 @@
 namespace wild {
 
 Exception::Exception(string message)
-    : Exception(std::move(message), wild::StackTrace(2)) {
+    : Exception(std::move(message), wild::stacktrace(2)) {
 }
 
 Exception::Exception(string message, string stacktrace) noexcept

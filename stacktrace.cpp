@@ -1,4 +1,5 @@
-#include "misc.hpp"
+#include "stacktrace.hpp"
+#include "utility.hpp"
 
 #include <execinfo.h>
 
@@ -13,7 +14,7 @@ using backtrace_len_t = int;
 namespace wild {
 
 string
-StackTrace(uintreg level) {
+stacktrace(uintreg level) {
     void *stacks[128];
     backtrace_len_t n = ::backtrace(stacks, static_cast<backtrace_len_t>(nelem(stacks)));
     char **symbols = ::backtrace_symbols(stacks, n);
@@ -25,7 +26,7 @@ StackTrace(uintreg level) {
         stackString.append(symbols[i]);
         stackString.push_back('\n');
     }
-    free(symbols);
+    ::free(symbols);
     return stackString;
 }
 
