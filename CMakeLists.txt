@@ -12,9 +12,9 @@ io.cpp
 
 set(wild_INCS
 BlockingQueue.hpp
-fd.hpp
+Fd.hpp
 io.hpp
-id_allocator.hpp
+IdAllocator.hpp
 types.hpp
 errno.hpp
 adler32.hpp
@@ -23,14 +23,14 @@ likely.hpp
 misc.hpp
 module.hpp
 module_init_failed.hpp
-scope_guard.hpp
+ScopeGuard.hpp
 string.hpp
 unique_name.hpp
-spinlock.hpp
+SpinLock.hpp
 with_lock.hpp
-forward_list.hpp
-freelist.hpp
-any.hpp
+ForwardList.hpp
+FreeList.hpp
+Any.hpp
 utility.hpp
 )
 
