@@ -11,6 +11,7 @@ stacktrace.cpp
 )
 
 set(wild_INCS
+AppendList.hpp
 BlockingQueue.hpp
 Fd.hpp
 io.hpp
