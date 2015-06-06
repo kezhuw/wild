@@ -7,6 +7,7 @@ exception.cpp
 module.cpp
 string.cpp
 io.cpp
+Signaler.cpp
 stacktrace.cpp
 )
 
@@ -26,6 +27,7 @@ module_init_failed.hpp
 ScopeGuard.hpp
 string.hpp
 unique_name.hpp
+Signaler.hpp
 SpinLock.hpp
 with_lock.hpp
 ForwardList.hpp
