@@ -1,5 +1,7 @@
 #pragma once
 
+#include "unique_name.hpp"
+
 #include <mutex>
 
 namespace wild {
@@ -17,5 +19,5 @@ struct with_lock_guard : std::lock_guard<Locker> {
 }
 
 #define WITH_LOCK(locker)       \
-    if (wild::detail::with_lock_guard<decltype(locker)> _with_lock_guard##__COUNTER__{locker}) {  \
+    if (wild::detail::with_lock_guard<decltype(locker)> UNIQUE_NAME(_with_lock_guard){locker}) {  \
     } else                      \
