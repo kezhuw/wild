@@ -38,6 +38,9 @@ private:
 
     template<typename Locker>
     class UnlockGuard {
+    private:
+        Locker& _locker;
+
     public:
         explicit UnlockGuard(Locker& locker) noexcept(noexcept(_locker.unlock()))
         : _locker(locker) {
@@ -47,9 +50,6 @@ private:
         ~UnlockGuard() noexcept(noexcept(_locker.lock())) {
             _locker.lock();
         }
-
-    private:
-        Locker& _locker;
     };
 
     int _pipe[2];
