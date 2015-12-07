@@ -21,3 +21,4 @@ struct with_lock_guard : std::lock_guard<Locker> {
 #define WITH_LOCK(locker)       \
     if (wild::detail::with_lock_guard<decltype(locker)> UNIQUE_NAME(_with_lock_guard){locker}) {  \
     } else                      \
+
