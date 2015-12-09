@@ -1,0 +1,4 @@
+base:
+  '*':
+    - clang
+    - bazel
