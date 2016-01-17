@@ -33,6 +33,7 @@ cc_library(
         "Any.hpp",
         "utility.hpp",
         "stacktrace.hpp",
+        "SharedSpinLock.hpp",
     ],
     copts = [
         "-std=c++1y",
