@@ -36,6 +36,11 @@ cc_library(
     ],
     copts = [
         "-std=c++1y",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wconversion",
+        "-Wshadow",
     ],
     visibility = ["//visibility:public"],
 )
