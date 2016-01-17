@@ -1,6 +1,7 @@
 cc_library(
     name = "wild",
     srcs = [
+        "atom.cpp",
         "adler32.cpp",
         "exception.cpp",
         "module.cpp",
@@ -10,6 +11,7 @@ cc_library(
         "stacktrace.cpp",
     ],
     hdrs = [
+        "atom.hpp",
         "AppendList.hpp",
         "BlockingQueue.hpp",
         "Fd.hpp",
