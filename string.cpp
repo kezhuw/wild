@@ -1,5 +1,5 @@
 #include "string.hpp"
-
+#include "compat.hpp"
 #include "errno.hpp"
 
 #include <cstring>

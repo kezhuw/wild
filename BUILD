@@ -14,6 +14,7 @@ cc_library(
         "atom.hpp",
         "AppendList.hpp",
         "BlockingQueue.hpp",
+        "compat.hpp",
         "Fd.hpp",
         "io.hpp",
         "IdAllocator.hpp",
