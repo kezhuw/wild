@@ -61,20 +61,16 @@ public:
         return _content ? _content->type() : typeid(void);
     }
 
-    // Auxiliary exception class inherited by all
-    // other exceptions escaped from wild::SharedAny.
-    class Exception : std::exception {
-    };
-
-    class BadCast : Exception {
+    class BadCast : std::bad_cast {
     public:
-        BadCast(const std::type_info& type, const std::type_info& expected) {
+        BadCast(const std::type_info& type, const std::type_info& failed) {
             char buf[512];
-            snprintf(buf, sizeof buf, "wild::SharedAny BadCast type[%s], expected[%s]", type.name(), expected.name());
+            snprintf(buf, sizeof buf, "wild::SharedAny with type[%s], cannot cast to type[%s]",
+                    type.name(), failed.name());
             _message = buf;
         }
 
-        virtual const char* what() const noexcept {
+        virtual const char* what() const noexcept override {
             return _message.c_str();
         }
 
@@ -82,18 +78,19 @@ public:
         std::string _message;
     };
 
-    template<typename ValueType>
-    static ValueType* Cast(SharedAny* operand) noexcept {
-        static_assert(!std::is_same<ValueType, void>::value, "can't cast to void");
-        return operand && operand->type() == typeid(ValueType) ?
+    template<typename PointerType>
+    static PointerType Cast(SharedAny* operand) noexcept {
+        static_assert(std::is_pointer<PointerType>::value, "result type must be pointer type");
+        using ValueType = std::remove_cv_t<std::remove_pointer_t<PointerType>>;
+        static_assert(!std::is_same<ValueType, void>::value, "cannot cast to `void *`");
+        return operand->type() == typeid(ValueType) ?
             &(static_cast<SharedAny::holder<ValueType>*>(operand->_content)->_value) : nullptr;
     }
 
     template<typename RefType>
     static RefType Cast(SharedAny& operand) {
-        using ValueType = std::remove_reference_t<RefType>;
         static_assert(std::is_reference<RefType>::value, "result type must be reference type");
-        static_assert(!std::is_reference<ValueType>::value, "possible ?");
+        using ValueType = std::remove_cv_t<std::remove_reference_t<RefType>>;
         if (operand.type() != typeid(ValueType)) {
             throw SharedAny::BadCast(operand.type(), typeid(ValueType));
         }
@@ -101,17 +98,18 @@ public:
     }
 
     // typeid(T) == typeid(const T)
-    template<typename ValueType>
-    static ValueType* Cast(const SharedAny* operand) noexcept {
-        static_assert(std::is_const<ValueType>::value, "result type must be const-qualified");
-        return Cast<const ValueType>(const_cast<SharedAny*>(operand));
+    template<typename PointerType>
+    static PointerType Cast(const SharedAny* operand) noexcept {
+        static_assert(std::is_const<std::remove_pointer_t<PointerType>>::value,
+                "result type must be const-qualified");
+        return Cast<PointerType>(const_cast<SharedAny*>(operand));
     }
 
     template<typename RefType>
     static RefType Cast(const SharedAny& operand) {
-        // XXX const RefType ???
-        using ValueType = std::remove_reference_t<RefType>;
-        return Cast<const ValueType&>(const_cast<SharedAny&>(operand));
+        static_assert(std::is_const<std::remove_reference_t<RefType>>::value,
+                "result type must be const-qualified");
+        return Cast<RefType>(const_cast<SharedAny&>(operand));
     }
 
 private:
