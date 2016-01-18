@@ -127,7 +127,7 @@ public:
         bool ok;
         std::unordered_set<Key>::iterator it;
         WITH_LOCK(_storage_mutex) {
-            enum : size_t { kMask = alignof(String) };
+            enum : size_t { kMask = alignof(String) - 1 };
             size_t size = (sizeof(String) + len + 1 + kMask) & ~kMask;
             auto s = key.s = reinterpret_cast<String*>(_storage.memory(size));
             set_atom(s, h, str, len);
