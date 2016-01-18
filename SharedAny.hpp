@@ -10,21 +10,20 @@
 
 namespace wild {
 
-// Same as boost::any, but with move-only class capable.
-class Any {
+class SharedAny {
 public:
 
-    Any() noexcept : _content(nullptr) {}
+    SharedAny() noexcept : _content(nullptr) {}
 
-    Any(const Any& other) noexcept : _content(other._content ? other._content->ref() : nullptr) {}
+    SharedAny(const SharedAny& other) noexcept : _content(other._content ? other._content->ref() : nullptr) {}
 
-    Any(Any&& other) noexcept : _content(other._content) { other._content = nullptr; }
+    SharedAny(SharedAny&& other) noexcept : _content(other._content) { other._content = nullptr; }
 
-    template<typename T, std::enable_if_t<!std::is_same<std::decay_t<T>, Any>::value>* = nullptr>
-    Any(T&& value)
+    template<typename T, std::enable_if_t<!std::is_same<std::decay_t<T>, SharedAny>::value>* = nullptr>
+    SharedAny(T&& value)
         : _content(new holder<std::remove_cv_t<std::remove_reference_t<T>>>(std::forward<T>(value))) {}
 
-    void swap(Any& other) noexcept {
+    void swap(SharedAny& other) noexcept {
         std::swap(_content, other._content);
     }
 
@@ -33,18 +32,18 @@ public:
     //
     // class's copy constructor and copy assignment operator is implicitly
     // deleted by user-declared move constructor or move assignment operator.
-    Any& operator=(const Any& other) noexcept {
-        Any(other).swap(*this);
+    SharedAny& operator=(const SharedAny& other) noexcept {
+        SharedAny(other).swap(*this);
         return *this;
     }
 
     template<typename T>
-    Any& operator=(T&& value) {
-        Any(std::forward<T>(value)).swap(*this);
+    SharedAny& operator=(T&& value) {
+        SharedAny(std::forward<T>(value)).swap(*this);
         return *this;
     }
 
-    ~Any() {
+    ~SharedAny() {
         if (_content && _content->unref()) {
             delete _content;
         }
@@ -63,7 +62,7 @@ public:
     }
 
     // Auxiliary exception class inherited by all
-    // other exceptions escaped from wild::Any.
+    // other exceptions escaped from wild::SharedAny.
     class Exception : std::exception {
     };
 
@@ -71,7 +70,7 @@ public:
     public:
         BadCast(const std::type_info& type, const std::type_info& expected) {
             char buf[512];
-            snprintf(buf, sizeof buf, "wild::Any BadCast type[%s], expected[%s]", type.name(), expected.name());
+            snprintf(buf, sizeof buf, "wild::SharedAny BadCast type[%s], expected[%s]", type.name(), expected.name());
             _message = buf;
         }
 
@@ -84,35 +83,35 @@ public:
     };
 
     template<typename ValueType>
-    static ValueType* Cast(Any* operand) noexcept {
+    static ValueType* Cast(SharedAny* operand) noexcept {
         static_assert(!std::is_same<ValueType, void>::value, "can't cast to void");
         return operand && operand->type() == typeid(ValueType) ?
-            &(static_cast<Any::holder<ValueType>*>(operand->_content)->_value) : nullptr;
+            &(static_cast<SharedAny::holder<ValueType>*>(operand->_content)->_value) : nullptr;
     }
 
     template<typename RefType>
-    static RefType Cast(Any& operand) {
+    static RefType Cast(SharedAny& operand) {
         using ValueType = std::remove_reference_t<RefType>;
         static_assert(std::is_reference<RefType>::value, "result type must be reference type");
         static_assert(!std::is_reference<ValueType>::value, "possible ?");
         if (operand.type() != typeid(ValueType)) {
-            throw Any::BadCast(operand.type(), typeid(ValueType));
+            throw SharedAny::BadCast(operand.type(), typeid(ValueType));
         }
-        return static_cast<Any::holder<ValueType>*>(operand._content)->_value;
+        return static_cast<SharedAny::holder<ValueType>*>(operand._content)->_value;
     }
 
     // typeid(T) == typeid(const T)
     template<typename ValueType>
-    static ValueType* Cast(const Any* operand) noexcept {
+    static ValueType* Cast(const SharedAny* operand) noexcept {
         static_assert(std::is_const<ValueType>::value, "result type must be const-qualified");
-        return Cast<const ValueType>(const_cast<Any*>(operand));
+        return Cast<const ValueType>(const_cast<SharedAny*>(operand));
     }
 
     template<typename RefType>
-    static RefType Cast(const Any& operand) {
+    static RefType Cast(const SharedAny& operand) {
         // XXX const RefType ???
         using ValueType = std::remove_reference_t<RefType>;
-        return Cast<const ValueType&>(const_cast<Any&>(operand));
+        return Cast<const ValueType&>(const_cast<SharedAny&>(operand));
     }
 
 private:
@@ -162,7 +161,7 @@ private:
 
 namespace std {
 
-inline void swap(wild::Any& a, wild::Any& b) {
+inline void swap(wild::SharedAny& a, wild::SharedAny& b) {
     a.swap(b);
 }
 
