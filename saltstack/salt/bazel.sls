@@ -1,4 +1,8 @@
+bazel-repo:
+  pkgrepo.managed:
+    - name: deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8
+    - key_url: https://bazel.build/bazel-release.pub.gpg
+    - require_in: bazel
+
 bazel:
-  pkg.installed:
-    - sources:
-      - bazel: https://github.com/bazelbuild/bazel/releases/download/0.1.2/bazel_0.1.2-linux-x86_64.deb
+  pkg.latest
